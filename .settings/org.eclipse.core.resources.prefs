@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//nba/main.py=utf-8
+encoding//nba/settings.py=UTF-8
+encoding//nba/spiders/nba_asia_odds.py=utf-8
+encoding//nba/spiders/nba_odds.py=utf-8
