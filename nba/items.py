@@ -16,7 +16,9 @@ class NbaItem(Item):
     result = Field()
     rangfen = Field()
     panlu = Field()
-
+    asiaodds=Field()
+    euroodds=Field()
+    
 class InjuryItem(Item):
     # define the fields for your item here like:
     # name = Field()

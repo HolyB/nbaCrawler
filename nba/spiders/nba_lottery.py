@@ -37,6 +37,8 @@ class NbaLotterySpider(BaseSpider):
             result = tr.xpath('td[6]/em/text()').extract()
             rangfen = tr.xpath('td[7]/text()').extract()
             panlu = tr.xpath('td[8]/em/text()').extract()
+            asiaodds=tr.xpath('td[11]/a[2]/@href').extract()
+            euroodds=tr.xpath('td[11]/a[3]/@href').extract()
             nbaitem = NbaItem()
             nbaitem['date'] = year + '-' + month_day
             nbaitem['kedui'] = kedui[0] if kedui else None
@@ -46,5 +48,7 @@ class NbaLotterySpider(BaseSpider):
             nbaitem['result'] = result[0] if result else None
             nbaitem['rangfen'] = rangfen[0] if rangfen else None
             nbaitem['panlu'] = panlu[0] if panlu else None
+            nbaitem['asiaodds']=asiaodds[0] if asiaodds else None
+            nbaitem['euroodds']=euroodds[0] if euroodds else None
             yield nbaitem
 
