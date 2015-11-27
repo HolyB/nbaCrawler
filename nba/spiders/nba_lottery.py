@@ -7,7 +7,7 @@ from scrapy.http import Request
 
 class NbaLotterySpider(BaseSpider):
     name = "nba_lottery"
-    allowed_domains = ["http://liansai.500.com"]
+   # allowed_domains = ["http://liansai.500.com","http://odds.500.com"]
     start_urls = (
             "http://liansai.500.com/lq/" + LP + "/proc/" + PROC + "/0_" + str(SEASON) + "_10/",
             "http://liansai.500.com/lq/" + LP + "/proc/" + PROC + "/0_" + str(SEASON) + "_11/",
@@ -22,6 +22,7 @@ class NbaLotterySpider(BaseSpider):
         sel = Selector(response)
         trs = sel.xpath('//*[@id="bd"]/div[3]/div[2]/div[2]/div/div/table/tbody/tr[position()>1]')
         url = response.url
+        print url
         spices = url.split('_')
         year = spices[1]
         for tr in trs:
@@ -38,6 +39,11 @@ class NbaLotterySpider(BaseSpider):
             rangfen = tr.xpath('td[7]/text()').extract()
             panlu = tr.xpath('td[8]/em/text()').extract()
             asiaodds=tr.xpath('td[11]/a[2]/@href').extract()
+            asiaurl='asiaodds[0].encode("utf-8")'
+            
+            
+            new_request=Request(url=asiaurl,callback=self.parse_asiaodds, dont_filter=True)
+            print new_request
             euroodds=tr.xpath('td[11]/a[3]/@href').extract()
             nbaitem = NbaItem()
             nbaitem['date'] = year + '-' + month_day
@@ -52,3 +58,7 @@ class NbaLotterySpider(BaseSpider):
             nbaitem['euroodds']=euroodds[0] if euroodds else None
             yield nbaitem
 
+    def parse_asiaodds(self, response):
+        sel=Selector(response)
+        print response.URL
+        yield 1
